@@ -32,6 +32,22 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtShowcaseLayout(){
+    //do a big column, with going top to bottom: image, info, buttons.
+}
+
+
+@Composable
+fun NextAndBackButtons(){
+
+}
+
+@Composable
+fun ArtInfo(slideNumber: Int = 1){
+
+}
+
+@Composable
+fun ArtPicture(slideNumber: Int = 1){
 
 }
 

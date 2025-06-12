@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ArtShowcase</string>
+    <string name="picture_1_name">Autumn</string>
+    <string name="picture_2_name">Green forest</string>
+    <string name="picture_3_name">Albuquerque road</string>
+    <string name="picture_1_desc">Bobik Bobikovich (1991)</string>
+    <string name="picture_2_desc">Abilmurat Muratovich (2002)</string>
+    <string name="picture_3_desc">Zuhrab Zuhrabovich (2023)</string>
 </resources>
