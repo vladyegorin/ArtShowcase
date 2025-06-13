@@ -24,6 +24,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,7 +55,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ArtShowcaseLayout(){
     //do a big column, with going top to bottom: image, info, buttons.
-    var slideNumber: Int = 1
+    var slideNumber = remember { mutableStateOf(1) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,7 +69,7 @@ fun ArtShowcaseLayout(){
 
         ) {
             ArtPicture(
-                slideNumber,
+                slideNumber.value,
                 modifier = Modifier.align(Alignment.Center)
             )
         }
@@ -80,9 +82,11 @@ fun ArtShowcaseLayout(){
             verticalArrangement = Arrangement.Bottom
         ) {
             ArtInfo(
-                slideNumber
+                slideNumber.value
                 )
             NextAndBackButtons(
+                slideNumber = slideNumber.value,
+                onSlideChange = { slideNumber.value = it},
                 modifier = Modifier
                     .padding(bottom = 25.dp)
             )
@@ -94,16 +98,16 @@ fun ArtShowcaseLayout(){
 
 
 @Composable
-fun NextAndBackButtons(modifier: Modifier = Modifier){
+fun NextAndBackButtons(slideNumber: Int,onSlideChange: (Int) -> Unit, modifier: Modifier = Modifier){
     Row{
 
-        Button(onClick = {prevSlide()},
+        Button(onClick = {onSlideChange(prevSlide(slideNumber))},
             modifier
                 .width(120.dp)
                 .padding(end = 8.dp)){
             Text("Previous")
         }
-        Button(onClick = {nextSlide()},
+        Button(onClick = {onSlideChange(nextSlide(slideNumber))},
             modifier
                 .width(120.dp)
                 .padding(start = 8.dp)){
@@ -113,12 +117,20 @@ fun NextAndBackButtons(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun ArtInfo(slideNumber: Int = 1,modifier: Modifier = Modifier){
+fun ArtInfo(slideNumber: Int,modifier: Modifier = Modifier){
     var paintName = "NAME"
     var paintInfo = "INFO"
     if(slideNumber==1){
         paintName = stringResource(R.string.picture_1_name)
         paintInfo = stringResource(R.string.picture_1_desc)
+    }
+    else if(slideNumber==2){
+        paintName = stringResource(R.string.picture_2_name)
+        paintInfo = stringResource(R.string.picture_2_desc)
+    }
+    else{
+        paintName = stringResource(R.string.picture_3_name)
+        paintInfo = stringResource(R.string.picture_3_desc)
     }
     Surface(
         modifier
@@ -138,7 +150,7 @@ fun ArtInfo(slideNumber: Int = 1,modifier: Modifier = Modifier){
 }
 
 @Composable
-fun ArtPicture(slideNumber: Int = 1, modifier: Modifier = Modifier){
+fun ArtPicture(slideNumber: Int, modifier: Modifier = Modifier){
     val imageResource = when(slideNumber){
         1->R.drawable.picture_1
         2->R.drawable.picture_2
@@ -155,12 +167,21 @@ fun ArtPicture(slideNumber: Int = 1, modifier: Modifier = Modifier){
 }
 
 
-fun nextSlide(){
+fun nextSlide(slideNumber: Int = 1): Int{
     //do logic like in lemonade to increase counter
+    var newSlideNumber = slideNumber
+    if(slideNumber<3){
+        newSlideNumber++
+    }
+    return newSlideNumber
 }
 
-fun prevSlide(){
-
+fun prevSlide(slideNumber: Int = 1): Int{
+    var newSlideNumber = slideNumber
+    if(slideNumber>1){
+        newSlideNumber--
+    }
+    return newSlideNumber
 }
 @Preview(showBackground = true)
 @Composable
