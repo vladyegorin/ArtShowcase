@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -28,12 +30,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.artshowcase.ui.theme.ArtShowcaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -133,18 +140,27 @@ fun ArtInfo(slideNumber: Int,modifier: Modifier = Modifier){
         paintInfo = stringResource(R.string.picture_3_desc)
     }
     Surface(
-        modifier
-            .wrapContentSize()
+        modifier = modifier
+            .wrapContentSize(Alignment.Center)
             .padding(25.dp)
-            .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp)),
+            .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
-        color = Color.LightGray,
-
+        color = Color.LightGray
     ) {
-        Column(modifier
-            .padding(16.dp)) {
-            Text(paintName)
-            Text(paintInfo)
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = paintName,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = paintInfo,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -156,14 +172,19 @@ fun ArtPicture(slideNumber: Int, modifier: Modifier = Modifier){
         2->R.drawable.picture_2
         else->R.drawable.picture_3
     }
-    Image(
-        painter = painterResource(imageResource),
-        contentDescription = null,
-        modifier = modifier
-            .size(350.dp), // Fixed size for all images
-        contentScale = ContentScale.FillBounds // Stretches to fill bounds
-    )
-
+    Box(
+        modifier = Modifier
+            .border(2.dp,Color.Gray, shape = RectangleShape)
+            .padding(20.dp)
+    ) {
+        Image(
+            painter = painterResource(imageResource),
+            contentDescription = null,
+            modifier = modifier
+                .size(350.dp),
+            contentScale = ContentScale.FillBounds // Stretches to fill bounds
+        )
+    }
 }
 
 
