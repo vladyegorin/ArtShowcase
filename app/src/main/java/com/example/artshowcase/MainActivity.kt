@@ -193,6 +193,8 @@ fun nextSlide(slideNumber: Int = 1): Int{
     var newSlideNumber = slideNumber
     if(slideNumber<3){
         newSlideNumber++
+    } else if(slideNumber==3){
+        newSlideNumber=1
     }
     return newSlideNumber
 }
@@ -201,6 +203,8 @@ fun prevSlide(slideNumber: Int = 1): Int{
     var newSlideNumber = slideNumber
     if(slideNumber>1){
         newSlideNumber--
+    } else if(slideNumber==1){
+        newSlideNumber = 3
     }
     return newSlideNumber
 }
